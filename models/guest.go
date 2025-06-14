@@ -9,4 +9,5 @@ type Guest struct {
 	Phone  string `json:"phone"`
 	IDCard string `json:"id_card"`
 	Remark string `json:"remark"`
+	Status string `json:"status"`
 }
