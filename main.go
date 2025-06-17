@@ -31,8 +31,10 @@ func main() {
 		AllowHeaders: "Content-Type",
 	}))
 
+	api := app.Group("/api/v1")
+
 	// GET ALL GUESTS
-	app.Get("/guests", func(c *fiber.Ctx) error {
+	api.Get("/guests", func(c *fiber.Ctx) error {
 		var guests []models.Guest
 
 		if err := db.Find(&guests).Where("status = 'active'").Error; err != nil {
@@ -49,7 +51,7 @@ func main() {
 	})
 
 	// CREATE GUEST
-	app.Post("/guests", func(c *fiber.Ctx) error {
+	api.Post("/guests", func(c *fiber.Ctx) error {
 		guest := new(models.Guest)
 
 		if err := c.BodyParser(guest); err != nil {
@@ -82,7 +84,7 @@ func main() {
 	})
 
 	// GET GUEST BY ID
-	app.Get("/guests/:id", func(c *fiber.Ctx) error {
+	api.Get("/guests/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		var guest models.Guest
 
@@ -100,7 +102,7 @@ func main() {
 	})
 
 	// UPDATE GUEST
-	app.Put("/guests/:id", func(c *fiber.Ctx) error {
+	api.Put("/guests/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		var guest models.Guest
 
@@ -145,7 +147,7 @@ func main() {
 		})
 	})
 
-	app.Delete("/guests/:id", func(c *fiber.Ctx) error {
+	api.Delete("/guests/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		var guest models.Guest
 
